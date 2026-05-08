@@ -58,22 +58,15 @@ app.get('/', (req, res) => {
 // Importamos os arquivos de rota da pasta /routes
 const rotasCategorias = require('./routes/categorias');
 const rotasProdutos = require('./routes/produtos');
+const rotasPedidos = require ('./routes/pedidos');
+
 
 // app.use('prefixo', router) registra o router com um prefixo de URL.
 // Toda rota definida dentro de categorias.js ficará em /api/categorias/...
 // Toda rota definida dentro de produtos.js ficará em /api/produtos/...
 app.use('/api/categorias', rotasCategorias);
 app.use('/api/produtos', rotasProdutos);
-
-
-// =============================================================
-// ── NOVO NA AULA 6: Tratamento de Rota não encontrada (404) ──
-// Este middleware DEVE vir DEPOIS de todas as rotas registradas.
-// Se a requisição chegou até aqui, nenhuma rota correspondeu.
-// Isso é o nosso "rota não encontrada" personalizado.
-//
-// Exemplo: GET /api/batata → cai aqui!
-// =============================================================
+app.use('/api/pedidos', rotasPedidos);
 app.use((req, res, next) => {
     res.status(404).json({
         sucesso: false,
@@ -114,6 +107,8 @@ app.listen(PORTA, () => {
     console.log(`   POST   /api/produtos`);
     console.log(`   PUT    /api/produtos/:id`);
     console.log(`   DELETE /api/produtos/:id`);
+    console.log(`   GET    /api/pedidos`);
+    console.log(`   POST   /api/pedidos`);
     console.log('');
     console.log('💣 Rota de teste de erro:');
     console.log(`   GET    /api/produtos/erro-teste`);
